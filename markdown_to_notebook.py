@@ -12,6 +12,7 @@ parser.add_argument('files', metavar='file', nargs='+', help='Files to compute')
 #parser.add_argument('-t', '--title-split', action='store_true')
 #parser.add_argument('-p', '--title-page', action='store_true')
 parser.add_argument('-o', '--output', default=None)
+parser.add_argument('--no-autolaunch', dest='autolaunch', action='store_false')
 # Add argument to split on files
 # + choose the type of slide when split (ex: file=slide, title=sub-slide or subtitle=sub-slide)
 # Possible splits : split on a ---, split on new file, split on title of level ≤N
@@ -197,7 +198,7 @@ doc = {
             'version': '3.6.5'
         },
         "livereveal": {
-            "autolaunch": True
+            "autolaunch": args.autolaunch,
         }
     },
     'nbformat': 4,
