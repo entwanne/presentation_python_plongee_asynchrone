@@ -70,6 +70,7 @@ class _Token:
     def __init__(self, _type, line=None, **kwargs):
         self.type = _type
         self.line = line
+        self.params = kwargs
         for key, value in kwargs.items():
             setattr(self, key, value)
 
@@ -168,7 +169,8 @@ cells = []
 slide_type = '-'
 for cell_type, content in get_cells(args.files):
     if cell_type == 'separator':
-        slide_type = content
+        if content != '-': # Continuation
+            slide_type = content
         continue
     cell = make_cell(cell_type, content, slide_type)
     cell = clean_cell(cell)
