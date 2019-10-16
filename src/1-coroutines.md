@@ -2,10 +2,14 @@
 
 ## Coroutines
 
+* Définition d'une coroutine depuis Python 3.5 :
+
 ```python
 async def simple_print(msg):
     print(msg)
 ```
+
+* `simple_print` est une fonction renvoyant une coroutine
 
 ```python
 simple_print
@@ -17,16 +21,33 @@ simple_print('Hello')
 
 --------------------
 
+* Le contenu est exécuté par le moteur asynchrone, ici à l'aide d'`await`
+
 ```python
 await simple_print('Hello')
 ```
 
+* En dehors d'un REPL asynchrone, il faudrait utiliser `asyncio.run`
+* Ou encore interagir directement avec la boucle événementielle :
+
+```python
+loop = asyncio.new_event_loop()
+loop.run_until_complete(simple_print('Hello'))
+```
+
+* Cette boucle exécute et cadence les différentes tâches
+* Elle permet une utilisation concurrente
+
 --------------------
+
+* De quoi est faite une coroutine ?
 
 ```python
 coro = simple_print('Hello')
 dir(coro)
 ```
+
+--------------------
 
 ```python
 aw = coro.__await__()
@@ -39,12 +60,16 @@ dir(aw)
 
 --------------------
 
+* On peut donc itérer manuellement sur une coroutine
+
 ```python
 for _ in simple_print('Hello').__await__():
     pass
 ```
 
 --------------------
+
+* Même une plus complexe
 
 ```python
 async def complex_work():
@@ -59,6 +84,8 @@ for _ in complex_work().__await__():
 
 --------------------
 
+* Plusieurs itérations sont bien parcourues
+
 ```python
 it = complex_work().__await__()
 next(it)
@@ -67,3 +94,7 @@ next(it)
 ```python
 next(it)
 ```
+
+* La boucle reprend le contrôle à chaque interruption
+* Le `await asyncio.sleep(0)` a pour effet de `yield`
+* `await` est équivalent à `yield from`

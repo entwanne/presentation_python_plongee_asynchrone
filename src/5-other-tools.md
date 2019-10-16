@@ -2,6 +2,15 @@
 
 ## Autres outils
 
+* Nouveaux outils pour profiter de l'environnement asynchrone
+* Nouveaux blocs : `for` et `with` asynchrones (`async for`, `async with`)
+
+## Itérables et générateurs asynchrones
+
+* Un intérable asynchrone possède une méthode `__aiter__` renvoyant un itérateur asynchrone
+* L'itérateur asynchrone a une méthode-coroutine `__anext__` renvoyant le prochain élément
+* La méthode lève une exception `StopAsyncIteration` en fin d'itération
+
 ```python
 class ARange:
     def __init__(self, stop):
@@ -27,6 +36,8 @@ class ARangeIterator:
 
 --------------------
 
+* Exécution au sein de notre moteur asynchrone
+
 ```python
 async def test_for():
     async for val in ARange(5):
@@ -38,6 +49,8 @@ loop.run_task(test_for())
 
 --------------------
 
+* On peut de façon similaire définir un générateur asynchrone (Python 3.6)
+
 ```python
 async def arange(stop):
     for i in range(stop):
@@ -45,7 +58,9 @@ async def arange(stop):
         yield i
 ```
 
---------------------
+## Gestionnaires de contexte asynchrones
+
+* Contexte asynchrone défini par ses méthodes `__aenter__` et `__aexit__`
 
 ```python
 class SQL:
@@ -61,6 +76,8 @@ class SQL:
 ```
 
 --------------------
+
+* Contextes asynchrones intégrés à la `contextlib` (Python 3.7)
 
 ```python
 from contextlib import asynccontextmanager

@@ -7,6 +7,7 @@
 <div align="right"><small><i>CC BY-SA</i></small></div>
 
 ```python skip
+import asyncio
 ```
 
 --------------------
@@ -18,5 +19,9 @@
 <center><img src="peopledoc.png" style="height: 10em;" /></center>
 
 ## Plongée au cœur du modèle asynchrone Python 
+
+* `asyncio` n'est pas le seul moteur asynchrone
+* `async` et `await` ne lui sont pas intrinsèquement liés
+* Comment réécrire `asyncio` ?
 
 * <https://github.com/entwanne/presentation_python_plongee_asynchrone>

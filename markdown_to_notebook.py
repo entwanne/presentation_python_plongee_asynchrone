@@ -30,6 +30,7 @@ def make_cell(cell_type, source, slide_type='-'):
     cell = {
         'cell_type': cell_type,
         'metadata': {
+            'scrolled': True,
             'slideshow': {
                 'slide_type': slide_type,
             },

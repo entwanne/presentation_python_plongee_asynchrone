@@ -2,6 +2,8 @@
 
 ## Boucles événementielles
 
+* Premier prototype de boucle événementielle
+
 ```python
 def run_task(task):
     it = task.__await__()
@@ -14,6 +16,10 @@ def run_task(task):
 ```
 
 --------------------
+
+* Peu d'utilité pour n'exécuter qu'une seule tâche
+* Version améliorée pouvant cadencer plusieurs tâches
+* Utilisation d'une file pour connaître la prochaîne tâche à itérer
 
 ```python
 def run_tasks(*tasks):
@@ -34,6 +40,8 @@ def run_tasks(*tasks):
 
 --------------------
 
+* Quelques exemples d'exécution concurrente
+
 ```python
 run_tasks(simple_print(1), ComplexWork(), simple_print(2), simple_print(3))
 ```
@@ -45,11 +53,15 @@ run_tasks(wait_job(waiter), count_up_to(waiter, 5))
 
 --------------------
 
+* Tâche unitaire simple pour rendre la main à la boucle
+
 ```python
 class interrupt:
     def __await__(self):
         yield
 ```
+
+* Qui nous permet de développer d'autres utilitaires
 
 ```python
 import time
@@ -64,6 +76,8 @@ async def sleep(duration):
 
 --------------------
 
+* Et d'en profiter dans notre environnement
+
 ```python
 async def print_messages(*messages, sleep_time=1):
     for msg in messages:
@@ -77,6 +91,9 @@ run_tasks(print_messages('foo', 'bar', 'baz'),
 ```
 
 --------------------
+
+* Une boucle événementielle est plus utile si nous pouvons interagir avec elle une fois lancée
+* Prototype d'une nouvelle boucle pouvant programmer des tâches à la volée (`add_task`)
 
 ```python
 class Loop:
@@ -108,6 +125,8 @@ loop.run_task(print_messages('foo', 'bar', 'baz'))
 
 --------------------
 
+* Ajout de `Loop.current` pour y accéder depuis nos tâches
+
 ```python
 class Loop:
     current = None
@@ -135,6 +154,8 @@ class Loop:
 ```
 
 --------------------
+
+* `gather` : utilitaire permettant d'attendre simultanément plusieurs tâches
 
 ```python
 class Waiter:
