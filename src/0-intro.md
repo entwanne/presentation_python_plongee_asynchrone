@@ -1,5 +1,5 @@
 # Plongée au cœur du modèle asynchrone Python 
-### Sans prendre la tasse !
+### Sans boire la tasse !
 #### <div align="right">Antoine "entwanne" Rozo</div>
 
 <div align="right"><img src="schtroumpf_flat_rounded.png" style="width: 5em;" /></div>
@@ -7,7 +7,10 @@
 <div align="right"><small><i>CC BY-SA</i></small></div>
 
 ```python skip
+%load_ext reopenable
 import asyncio
+
+class Loop(metaclass=Reopenable): pass
 ```
 
 --------------------

@@ -101,7 +101,9 @@ class Loop:
         self.tasks = []
 
     def add_task(self, task):
-        self.tasks.append(task.__await__())
+        if hasattr(task, '__await__'):
+            task = task.__await__()
+        self.tasks.append(task)
 
     def run(self):
         while self.tasks:
@@ -129,13 +131,9 @@ loop.run_task(print_messages('foo', 'bar', 'baz'))
 
 ```python
 class Loop:
+    [...]
+
     current = None
-
-    def __init__(self):
-        self.tasks = []
-
-    def add_task(self, task):
-        self.tasks.append(task.__await__())
 
     def run(self):
         Loop.current = self
@@ -147,10 +145,6 @@ class Loop:
                 pass
             else:
                 self.tasks.append(task)
-
-    def run_task(self, task):
-        self.add_task(task)
-        self.run()
 ```
 
 --------------------
@@ -184,6 +178,7 @@ async def gather(*tasks):
 ```
 
 ```python
+loop = Loop()
 loop.run_task(gather(print_messages('foo', 'bar', 'baz'),
     print_messages('aaa', 'bbb', 'ccc', sleep_time=0.7)))
 ```

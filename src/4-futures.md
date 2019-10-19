@@ -55,14 +55,21 @@ class Future:
 
 ```python
 class Loop:
-    ...
+    [...]
 
     def run(self):
-        ...
-        if isinstance(result, Future):
-            result.task = task
-        else:
-            self.tasks.append(task)
+        Loop.current = self
+        while self.tasks:
+            task = self.tasks.pop(0)
+            try:
+                result = next(task)
+            except StopIteration:
+                continue
+
+            if isinstance(result, Future):
+                result.task = task
+            else:
+                self.tasks.append(task)
 ```
 
 --------------------
@@ -71,6 +78,7 @@ class Loop:
 * Ajout d'une méthode `call_later`
 
 ```python
+from functools import total_ordering
 @total_ordering
 class TimeEvent:
     def __init__(self, t, future):
@@ -80,16 +88,60 @@ class TimeEvent:
         return self.t == rhs.t
     def __lt__(self, rhs):
         return self.t < rhs
+```
+
+--------------------
+
+```python
+import heapq
 
 class Loop:
-    ...
+    [...]
+
+    handlers = []
+
     def call_later(self, t, future):
-        heapq.push(self.handlers, TimeEvent(t, future))
+        heapq.heappush(self.handlers, TimeEvent(t, future))
 
     def run(self):
-        ...
-        if self.handlers and self.handlers[0].t <= time.time():
-            handler = heapq.pop(self.handlers)
-            handler.future.set()
-        ...
+        Loop.current = self
+        while self.tasks or self.handlers:
+            if self.handlers and self.handlers[0].t <= time.time():
+                handler = heapq.heappop(self.handlers)
+                handler.future.set()
+
+            if not self.tasks:
+                continue
+            task = self.tasks.pop(0)
+            try:
+                result = next(task)
+            except StopIteration:
+                continue
+
+            if isinstance(result, Future):
+                result.task = task
+            else:
+                self.tasks.append(task)
+```
+--------------------
+
+```python
+import time
+
+async def sleep(t):
+    future = Future()
+    Loop.current.call_later(time.time() + t, future)
+    await future
+```
+
+```python
+async def foo():
+    print('before')
+    await sleep(5)
+    print('after')
+```
+
+```python
+loop = Loop()
+loop.run_task(foo())
 ```
