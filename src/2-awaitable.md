@@ -1,5 +1,6 @@
 # Attendez-moi !
 
+
 ## Awaitables
 
 * Les coroutines sont des tâches asynchrones (*awaitables*)
@@ -21,7 +22,8 @@ class ComplexWork:
 await ComplexWork()
 ```
 
---------------------
+
+## Awaitables - itération
 
 * Itération manuelle sur notre tâche
 
@@ -34,7 +36,8 @@ next(it)
 next(it)
 ```
 
---------------------
+
+## Awaitables
 
 * Les tâches autres que les coroutines sont peu courantes
 * Utiles pour conserver un état associé à la tâche
@@ -49,7 +52,8 @@ class Waiter:
             yield
 ```
 
---------------------
+
+## Awaitables - synchronisation
 
 * Permet à deux tâches de se synchroniser
 

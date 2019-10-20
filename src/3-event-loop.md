@@ -1,5 +1,6 @@
 # Boucles événementielles
 
+
 ## Boucles événementielles
 
 * Premier prototype de boucle événementielle
@@ -15,7 +16,8 @@ def run_task(task):
             break
 ```
 
---------------------
+
+## Boucles évenementielles
 
 * Peu d'utilité pour n'exécuter qu'une seule tâche
 * Version améliorée pouvant cadencer plusieurs tâches
@@ -38,7 +40,8 @@ def run_tasks(*tasks):
             tasks.append(task)
 ```
 
---------------------
+
+## Boucles évenementielles - exécution
 
 * Quelques exemples d'exécution concurrente
 
@@ -51,7 +54,8 @@ waiter = Waiter()
 run_tasks(wait_job(waiter), count_up_to(waiter, 5))
 ```
 
---------------------
+
+## Environnement asynchrone
 
 * Tâche unitaire simple pour rendre la main à la boucle
 
@@ -74,7 +78,8 @@ async def sleep(duration):
     await sleep_until(time.time() + duration)
 ```
 
---------------------
+
+## Environnement asynchrone - exemple
 
 * Et d'en profiter dans notre environnement
 
@@ -90,7 +95,8 @@ run_tasks(print_messages('foo', 'bar', 'baz'),
     print_messages('aaa', 'bbb', 'ccc', sleep_time=0.7))
 ```
 
---------------------
+
+## Boucles événementielles - interactions
 
 * Une boucle événementielle est plus utile si nous pouvons interagir avec elle une fois lancée
 * Prototype d'une nouvelle boucle pouvant programmer des tâches à la volée (`add_task`)
@@ -113,7 +119,17 @@ class Loop:
             except StopIteration:
                 pass
             else:
-                self.tasks.append(task)
+                self.add_task(task)
+```
+
+
+## Boucles événementielles - interactions
+
+* Ajout d'une méthode pour faciliter le lancement
+
+```python
+class Loop:
+    [...]
 
     def run_task(self, task):
         self.add_task(task)
@@ -125,9 +141,10 @@ loop = Loop()
 loop.run_task(print_messages('foo', 'bar', 'baz'))
 ```
 
---------------------
 
-* Ajout de `Loop.current` pour y accéder depuis nos tâches
+## Boucles événementielles - interactions
+
+* Ajout de `Loop.current` pour rendre la boucle accessible depuis nos tâches
 
 ```python
 class Loop:
@@ -144,12 +161,15 @@ class Loop:
             except StopIteration:
                 pass
             else:
-                self.tasks.append(task)
+                self.add_task(task)
 ```
 
---------------------
 
-* `gather` : utilitaire permettant d'attendre simultanément plusieurs tâches
+## Boucles événementielles - utilitaires
+
+* Implémentation de `gather`, utilitaire permettant d'attendre simultanément plusieurs tâches
+
+* Amélioration de notre classe `Waiter` pour attendre plusieurs validations
 
 ```python
 class Waiter:
@@ -163,6 +183,11 @@ class Waiter:
         while self.i > 0:
             yield
 ```
+
+
+## Boucles événementielles - utilitaires
+
+* Utilisée par `gather` pour attendre `N` tâches
 
 ```python
 async def gather(*tasks):
@@ -182,3 +207,10 @@ loop = Loop()
 loop.run_task(gather(print_messages('foo', 'bar', 'baz'),
     print_messages('aaa', 'bbb', 'ccc', sleep_time=0.7)))
 ```
+
+
+## Boucles événementielles - utilitaires
+
+* Autre utilitaire : gestion de _sockets_ asynchrones
+* Utilisation de `select` pour savoir quand la _socket_ est disponible
+* Renvoi à la boucle événementielle le cas échéant

@@ -11,6 +11,11 @@
 * L'itérateur asynchrone a une méthode-coroutine `__anext__` renvoyant le prochain élément
 * La méthode lève une exception `StopAsyncIteration` en fin d'itération
 
+
+## Itérables asynchrones
+
+* Exemple : équivalent asychrone à `range`
+
 ```python
 class ARange:
     def __init__(self, stop):
@@ -34,7 +39,8 @@ class ARangeIterator:
         return i
 ```
 
---------------------
+
+## Itérables asynchrones
 
 * Exécution au sein de notre moteur asynchrone
 
@@ -47,7 +53,8 @@ loop = Loop()
 loop.run_task(test_for())
 ```
 
---------------------
+
+## Générateurs asynchrones
 
 * On peut de façon similaire définir un générateur asynchrone (Python 3.6)
 
@@ -57,6 +64,7 @@ async def arange(stop):
         await sleep(1)
         yield i
 ```
+
 
 ## Gestionnaires de contexte asynchrones
 
@@ -75,7 +83,8 @@ class SQL:
         await self.conn.close()
 ```
 
---------------------
+
+## Gestionnaires de contexte asynchrones
 
 * Contextes asynchrones intégrés à la `contextlib` (Python 3.7)
 

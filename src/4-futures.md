@@ -1,12 +1,14 @@
 # Futures
 
+
 ## Futures
 
 * L'implémentation précédente de `sleep` est inefficace
 * La tâche est sans cesse reprogrammée pour rien
 * De même pour la tâche `Waiter` qui n'a besoin d'être lancée qu'une fois sa condition validée
 
---------------------
+
+## Futures - asyncio
 
 * `asyncio` utilise un mécanisme de _futures_ :
 
@@ -20,9 +22,10 @@ loop.run_task(test())
 
 * Le `yield` utilisé pour rendre la main à la boucle peut être accompagné d'une valeur
 
---------------------
 
-* _Future_ n'ayant pour but d'être reprogrammé qu'une fois sa condition validée
+## Futures - exemple
+
+* _Future_ n'ayant pour but d'être relancée qu'une fois sa condition validée
 
 ```python
 class Future:
@@ -31,7 +34,10 @@ class Future:
         assert self.done
 ```
 
---------------------
+
+## Futures - exemple
+
+* On ajoute une méthode de validation avec appel d'un _callback_
 
 ```python
 class Future:
@@ -49,7 +55,8 @@ class Future:
             Loop.current.add_task(self.task)
 ```
 
---------------------
+
+## Futures - boucle événementielle
 
 * Détection des _futures_ par la boucle événementielle
 
@@ -72,25 +79,32 @@ class Loop:
                 self.tasks.append(task)
 ```
 
---------------------
 
-* Prise en compte des événements temporels
-* Ajout d'une méthode `call_later`
+## Futures - événements temporels
+
+* Gestion d'événements temporels
+* Événements associant une _future_ à un temps
 
 ```python
 from functools import total_ordering
+
 @total_ordering
 class TimeEvent:
     def __init__(self, t, future):
         self.t = t
         self.future = future
+
     def __eq__(self, rhs):
         return self.t == rhs.t
+
     def __lt__(self, rhs):
         return self.t < rhs
 ```
 
---------------------
+
+## Futures - événements temporels
+
+* Ajout d'une méthode `call_later`
 
 ```python
 import heapq
@@ -102,6 +116,16 @@ class Loop:
 
     def call_later(self, t, future):
         heapq.heappush(self.handlers, TimeEvent(t, future))
+```
+
+
+## Futures - événements temporels
+
+* Prise en compte des événements temporels par la boucle
+
+```python
+class Loop:
+    [...]
 
     def run(self):
         Loop.current = self
@@ -123,7 +147,11 @@ class Loop:
             else:
                 self.tasks.append(task)
 ```
---------------------
+
+
+## Futures - utilitaires
+
+* Ce qui nous permet une meilleure version de `sleep`
 
 ```python
 import time
