@@ -209,8 +209,116 @@ loop.run_task(gather(print_messages('foo', 'bar', 'baz'),
 ```
 
 
-## Boucles événementielles - utilitaires
+## Boucles événementielles - utilitaires réseau
 
 * Autre utilitaire : gestion de _sockets_ asynchrones
 * Utilisation de `select` pour savoir quand la _socket_ est disponible
 * Renvoi à la boucle événementielle le cas échéant
+
+
+## Boucles événementielles - utilitaires réseau
+
+```python
+import select
+
+class AIOSocket:
+    def __init__(self, socket):
+        self.socket = socket
+        self.pollin = select.epoll()
+        self.pollin.register(self, select.EPOLLIN)
+        self.pollout = select.epoll()
+        self.pollout.register(self, select.EPOLLOUT)
+
+    def close(self):
+        self.socket.close()
+
+    def fileno(self):
+        return self.socket.fileno()
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, *args):
+        self.socket.close()
+```
+
+
+## Boucles événementielles - utilitaires réseau
+
+```python
+class AIOSocket:
+    [...]
+
+    async def bind(self, addr):
+        while not self.pollin.poll():
+            await interrupt()
+        self.socket.bind(addr)
+
+    async def listen(self):
+        while not self.pollin.poll():
+            await interrupt()
+        self.socket.listen()
+
+    async def connect(self, addr):
+        while not self.pollin.poll():
+            await interrupt()
+        self.socket.connect(addr)
+```
+
+
+## Boucles événementielles - utilitaires réseau
+
+```python
+class AIOSocket:
+    [...]
+
+    async def accept(self):
+        while not self.pollin.poll(0):
+            await interrupt()
+        client, _ = self.socket.accept()
+        return self.__class__(client)
+
+    async def recv(self, bufsize):
+        while not self.pollin.poll(0):
+            await interrupt()
+        return self.socket.recv(bufsize)
+
+    async def send(self, bytes):
+        while not self.pollout.poll(0):
+            await interrupt()
+        return self.socket.send(bytes)
+```
+
+
+## Boucles événementielles - utilitaires réseau
+
+```python
+import socket
+
+def aiosocket(family=socket.AF_INET, type=socket.SOCK_STREAM, proto=0, fileno=None):
+    return AIOSocket(socket.socket(family, type, proto, fileno))
+```
+
+
+## Boucles événementielles - utilitaires réseau
+
+```python
+async def server_coro():
+    with aiosocket() as server:
+        await server.bind(('localhost', 8080))
+        await server.listen()
+        with await server.accept() as client:
+            msg = await client.recv(1024)
+            print('Received from client', msg)
+            await client.send(msg[::-1])
+
+async def client_coro():
+    with aiosocket() as client:
+        await client.connect(('localhost', 8080))
+        await client.send(b'Hello World!')
+        msg = await client.recv(1024)
+        print('Received from server', msg)
+
+loop = Loop()
+loop.run_task(gather(server_coro(), client_coro()))
+```

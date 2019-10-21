@@ -7,7 +7,7 @@
 
 ## Itérables et générateurs asynchrones
 
-* Un intérable asynchrone possède une méthode `__aiter__` renvoyant un itérateur asynchrone
+* Un itérable asynchrone possède une méthode `__aiter__` renvoyant un itérateur asynchrone
 * L'itérateur asynchrone a une méthode-coroutine `__anext__` renvoyant le prochain élément
 * La méthode lève une exception `StopAsyncIteration` en fin d'itération
 
@@ -71,16 +71,33 @@ async def arange(stop):
 * Contexte asynchrone défini par ses méthodes `__aenter__` et `__aexit__`
 
 ```python
-class SQL:
-    def __init__(self, conn):
-        self.conn = conn
+class Server:
+    def __init__(self, addr):
+        self.socket = aiosocket()
+        self.addr = addr
 
     async def __aenter__(self):
-        await self.conn.connect()
-        return self.conn
+        await self.socket.bind(self.addr)
+        await self.socket.listen()
+        return self.socket
 
     async def __aexit__(self, *args):
-        await self.conn.close()
+        self.socket.close()
+```
+
+
+## Gestionnaires de contexte asynchrones
+
+```python
+async def test_with():
+    async with Server(('localhost', 8080)) as server:
+        with await server.accept() as client:
+            msg = await client.recv(1024)
+            print('Received from client', msg)
+            await client.send(msg[::-1])
+
+loop = Loop()
+loop.run_task(gather(test_with(), client_coro()))
 ```
 
 
@@ -92,12 +109,12 @@ class SQL:
 from contextlib import asynccontextmanager
 
 @asynccontextmanager
-async def sql():
+async def server(addr):
+    socket = aiosocket()
     try:
-        print('Connecting...')
-        await sleep(1)
-        yield
+        await socket.bind(addr)
+        await socket.listen()
+        yield socket
     finally:
-        print('Closing')
-        await sleep(1)
+        socket.close()
 ```

@@ -11,6 +11,7 @@
 import asyncio
 
 class Loop(metaclass=Reopenable): pass
+class AIOSocket(metaclass=Reopenable): pass
 ```
 
 --------------------
