@@ -16,11 +16,7 @@ class AIOSocket(metaclass=Reopenable): pass
 
 --------------------
 
-<center><img src="zestedesavoir.png" style="height: 20em;" /></center>
-
---------------------
-
-<center><img src="peopledoc.png" style="height: 10em;" /></center>
+<center><img src="logos.png" style="height: 20em;" /></center>
 
 ## Plongée au cœur du modèle asynchrone Python 
 

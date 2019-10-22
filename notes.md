@@ -2,15 +2,11 @@
 
 *
 
-## 1.2 - Zeste de Savoir
+## 1.2 - Logos
 
 *
 
-## 1.3 - PeopleDoc
-
-*
-
-## 1.4 - Plongée au cœur du modèle asynchrone Python
+## 1.3 - Plongée au cœur du modèle asynchrone Python
 
 *
 
