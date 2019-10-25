@@ -8,7 +8,7 @@ $(PRES):	$(SRC)
 		lucina -o $@ $^ --no-autolaunch
 
 $(NOTES):	notes.md
-		pandoc -V geometry:margin=0.5in $^ -o $@
+		pandoc -V geometry:margin=0.3in $^ -o $@
 
 
 pres:		$(PRES)
