@@ -20,8 +20,6 @@ loop = Loop()
 loop.run_task(test())
 ```
 
---------------------
-
 * Le `yield` utilisé pour rendre la main à la boucle peut être accompagné d'une valeur
 
 

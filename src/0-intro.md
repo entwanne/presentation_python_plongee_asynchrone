@@ -1,22 +1,14 @@
-# Plongée au cœur du modèle asynchrone Python 
-### Sans boire la tasse !
-#### <div align="right">Antoine "entwanne" Rozo</div>
+## \center Plongée au cœur du modèle asynchrone Python
+### \center Sans boire la tasse !
+#### \hfill Antoine "entwanne" Rozo
 
-<div align="right"><img src="schtroumpf_flat_rounded.png" style="width: 5em;" /></div>
+\hfill \includegraphics[width=5em]{schtroumpf_flat_rounded.png}
 
-<div align="right"><img src="cc_by_sa.svg" style="width: 5em;" /></div>
-
-```python skip
-%load_ext reopenable
-import asyncio
-
-class Loop(metaclass=Reopenable): pass
-class AIOSocket(metaclass=Reopenable): pass
-```
+\hfill \includegraphics[width=5em]{cc_by_sa.png}
 
 ##  
 
-<center><img src="logos.png" style="height: 20em;" /></center>
+\center \includegraphics[height=15em]{logos.png}
 
 ## Plongée au cœur du modèle asynchrone Python 
 

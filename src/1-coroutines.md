@@ -10,8 +10,6 @@ async def simple_print(msg):
     print(msg)
 ```
 
---------------------
-
 * `simple_print` est une fonction renvoyant une coroutine
 
 ```python
@@ -31,8 +29,6 @@ simple_print('Hello')
 await simple_print('Hello')
 ```
 
---------------------
-
 * En dehors d'un *REPL* asynchrone, il faudrait utiliser `asyncio.run`
 
 ```python
@@ -46,8 +42,6 @@ loop = asyncio.new_event_loop()
 loop.run_until_complete(simple_print('Hello'))
 ```
 
---------------------
-
 * Cette boucle exécute et cadence les différentes tâches
 * Elle permet une utilisation concurrente
 
@@ -55,8 +49,6 @@ loop.run_until_complete(simple_print('Hello'))
 ## Coroutines - introspection
 
 * De quoi est faite une coroutine ?
-
---------------------
 
 * C'est un objet avec une méthode `__await__`
 
@@ -118,8 +110,6 @@ next(it)
 ```python
 next(it)
 ```
-
---------------------
 
 * La boucle reprend le contrôle à chaque interruption
 * Le `await asyncio.sleep(0)` a pour effet de `yield`

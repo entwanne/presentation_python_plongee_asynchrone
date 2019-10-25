@@ -65,8 +65,6 @@ class interrupt:
         yield
 ```
 
---------------------
-
 * Qui nous permet de développer d'autres utilitaires
 
 ```python

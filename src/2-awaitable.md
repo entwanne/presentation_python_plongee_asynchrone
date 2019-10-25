@@ -6,8 +6,6 @@
 * Les coroutines sont des tâches asynchrones (*awaitables*)
 * Un awaitable est un objet avec une méthode `__await__`
 
---------------------
-
 * Tâche équivalente à la coroutine `complex_work` :
 
 ```python
