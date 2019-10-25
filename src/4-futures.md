@@ -37,7 +37,7 @@ class Future:
 
 ## Futures - exemple
 
-* On ajoute une méthode de validation avec appel d'un _callback_
+* On ajoute une méthode de validation qui reprogramme la tâche
 
 ```python
 class Future:
