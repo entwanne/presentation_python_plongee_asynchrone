@@ -1,4 +1,4 @@
-# Boucles événementielles
+# Boucle d'or et les trois tâches
 
 
 ## Boucles événementielles

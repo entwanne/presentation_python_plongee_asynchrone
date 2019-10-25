@@ -97,7 +97,7 @@
 * D'autres utilisations de `Waiter` sont possibles pour gérer par exemple des verrous (*mutex*)
 
 
-# 4.1 - Boucles événementielles
+# 4.1 - Boucle d'or et les trois tâches
 
 ## 4.2 - Boucles événementielles (`run_task`)
 
@@ -194,7 +194,7 @@
 * On constate que rien n'est bloquant puisque les deux coroutines ont pu s'exécuter
 
 
-# 5.1 - Futures
+# 5.1 - No Future
 
 ## 5.2 - Futures
 
@@ -271,7 +271,7 @@
 * C'est bien sûr plus évolué dans `asyncio`
 
 
-# 6.1 - Quelques autres outils
+# 6.1 - Et pour quelques outils de plus
 
 ## 6.2 - Autres outils
 
