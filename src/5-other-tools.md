@@ -88,6 +88,8 @@ class Server:
 
 ## Gestionnaires de contexte asynchrones
 
+* Exécution au sein de notre moteur asynchrone
+
 ```python
 async def test_with():
     async with Server(('localhost', 8080)) as server:

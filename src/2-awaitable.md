@@ -25,7 +25,7 @@ await ComplexWork()
 
 ## Awaitables - itération
 
-* Itération manuelle sur notre tâche
+* Notre tâche respecte le protocole établi
 
 ```python
 it = ComplexWork().__await__()
@@ -40,7 +40,7 @@ next(it)
 ## Awaitables
 
 * Les tâches autres que les coroutines sont peu courantes
-* Utiles pour conserver un état associé à la tâche
+* Mais sont utiles pour conserver un état associé à la tâche
 
 ```python
 class Waiter:
@@ -55,7 +55,7 @@ class Waiter:
 
 ## Awaitables - synchronisation
 
-* Permet à deux tâches de se synchroniser
+* `Waiter` permet à deux tâches de se synchroniser
 
 ```python
 waiter = Waiter()

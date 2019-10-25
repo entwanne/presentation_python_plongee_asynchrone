@@ -29,7 +29,7 @@ simple_print('Hello')
 await simple_print('Hello')
 ```
 
-* En dehors d'un REPL asynchrone, il faudrait utiliser `asyncio.run`
+* En dehors d'un *REPL* asynchrone, il faudrait utiliser `asyncio.run`
 
 ```python
 asyncio.run(simple_print('Hello'))
@@ -83,7 +83,7 @@ for _ in simple_print('Hello').__await__():
 
 ## Coroutines - itération
 
-* Même une plus complexe
+* De même avec une coroutine plus complexe
 
 ```python
 async def complex_work():

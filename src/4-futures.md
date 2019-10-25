@@ -25,7 +25,7 @@ loop.run_task(test())
 
 ## Futures - exemple
 
-* _Future_ n'ayant pour but d'être relancée qu'une fois sa condition validée
+* Cette _future_ ne doit être relancée qu'une fois sa condition validée
 
 ```python
 class Future:
@@ -82,8 +82,8 @@ class Loop:
 
 ## Futures - événements temporels
 
-* Gestion d'événements temporels
-* Événements associant une _future_ à un temps
+* L'idée est d'associer une _future_ à un temps
+* On intègre pour cela une gestion d'événéments temporels
 
 ```python
 from functools import total_ordering
