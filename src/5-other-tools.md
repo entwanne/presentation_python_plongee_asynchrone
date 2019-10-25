@@ -8,7 +8,13 @@
 ## Itérables et générateurs asynchrones
 
 * Un itérable asynchrone possède une méthode `__aiter__` renvoyant un itérateur asynchrone
+
+--------------------
+
 * L'itérateur asynchrone a une méthode-coroutine `__anext__` renvoyant le prochain élément
+
+--------------------
+
 * La méthode lève une exception `StopAsyncIteration` en fin d'itération
 
 

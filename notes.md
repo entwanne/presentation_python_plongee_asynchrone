@@ -24,6 +24,9 @@
 ## 2.2 - Coroutines (définition)
 
 * Définition d'une coroutine avec `async def` (Python 3.5)
+
+------------
+
 * La coroutine est la valeur de retour de la fonction (comme pour les générateurs)
 * Peut donc recevoir des arguments comme toute fonction, utilisés par la coroutine
 
@@ -32,7 +35,13 @@
 * Le contenu d'une coroutine est exécuté avec `await` depuis un environnement asynchrone
 * C'est le cas du *REPL* `jupyter-notebook`
 * Une coroutine est aussi un environnement asynchrone (donc `await` peut y être utilisé pour en attendre une autre)
+
+------------
+
 * Il faut sinon la lancer dans une boucle événementielle ou utiliser `asyncio.run` (`asyncio` se charge de démarrer la coroutine et attendre qu'elle se termine)
+
+------------
+
 * La boucle événementielle est propre au moteur asynchrone (`asyncio`), elle cadence et exécute les tâches de façon concurrente
 
 ## 2.4 - Coroutines - introspection (`coroutine`)
@@ -59,6 +68,9 @@
 * On le verrait cependant plus clairement si l'exécution se faisait pas à pas
 * Ce que l'on peut obtenir en faisant manuellement les appels à `next`
 * Chaque interruption devient alors visible
+
+------------
+
 * L'interruption permet à la boucle de reprendre la main, de gérer les événements et de cadencer les tâches (suspendre ou continuer)
 * C'est équivalent au `yield` des générateurs, `await` étant similaire à `yield from`
     * (`await asyncio.sleep(0)` est un cas particulier de `sleep` qui fait juste un `yield`, le comportement serait différent avec un temps non nul)
@@ -73,6 +85,8 @@
 * Cette méthode doit renvoyer un itérateur (pas un itérable !)
 * Le plus simple est alors d'utiliser une méthode génératrice (`yield`)
 * C'était d'ailleurs la manière de faire avant Python 3.5 : un décorateur transformait un générateur en coroutine
+
+------------
 
 * La classe `ComplexWork` est équivalente à la fonction `complex_work` précédente
 * On peut bien sûr l'utiliser avec `await`
@@ -121,6 +135,9 @@
 * L'interruption simple est souvent nécessaire
 * On peut donc créer une classe `interrupt` qui sera équivalente au `yield` / `await sleep(0)`
 * Ce qui nous permet d'avoir une tâche à attendre pour créer une interruption depuis des coroutines
+
+--------------------
+
 * On s'en sert donc pour réaliser une coroutine `sleep` attendant un certain nombre de secondes
 
 ## 4.6 - Environnement asynchrone - exemple
@@ -206,6 +223,9 @@
 
 * Il existe pour cela un mécanisme de *futures* dans `asyncio`, que l'on peut facilement mettre en évidence
 * Une *future* permet d'attendre un résultat qui n'a pas encore été calculé
+
+--------------------
+
 * Cela passe par le `yield` de nos tâches asynchrones qui n'est pas obligé de renvoyer `None` à la boucle, comme dans le cas d'`asyncio.sleep`
 
 ## 5.4 - Futures - exemple (classe `Future`)
@@ -289,7 +309,13 @@
 * `__aiter__` et `__anext__` semblables à `__iter__` et `__next__`
 * `__aiter__` renvoie un itérateur asynchrone
 * `__aiter__` est une méthode synchrone
+
+--------------------
+
 * `__anext__` est une coroutine, renvoyant l'élément suivant (et pouvant utiliser tous les outils asynchrones)
+
+--------------------
+
 * `StopAsyncIteration` équivalent à `StopIteration`
 * Le `for` sera suspendu le temps de l'attente de l'itérateur (rendant la main à la boucle événementielle)
 
