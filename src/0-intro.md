@@ -4,7 +4,7 @@
 
 <div align="right"><img src="schtroumpf_flat_rounded.png" style="width: 5em;" /></div>
 
-<div align="right"><small><i>CC BY-SA</i></small></div>
+<div align="right"><img src="cc_by_sa.svg" style="width: 5em;" /></div>
 
 ```python skip
 %load_ext reopenable
