@@ -4,7 +4,7 @@ _Sans boire la tasse._
 
 Présentation associée à l'article https://github.com/entwanne/article_python_plongee_asynchrone
 
-Présentée lors de la PyConFr 2019 : XXX
+Présentée lors de la PyConFr 2019 : <https://www.youtube.com/watch?v=WdQmNl2kShI>.
 
 ## Lecture
 
