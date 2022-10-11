@@ -1,9 +1,7 @@
-# Plongée au cœur du modèle asynchrone Python 
-### Sans boire la tasse !
-#### <div align="right">Antoine "entwanne" Rozo</div>
+# Dive into Python asynchronous model
+### Without drowning!
 
-<div align="right"><img src="schtroumpf_flat_rounded.png" style="width: 5em;" /></div>
-
+<center><img src="logo_pres.png" style="height: 15em;" /></center>
 <div align="right"><img src="cc_by_sa.svg" style="width: 5em;" /></div>
 
 ```python skip
@@ -14,14 +12,8 @@ class Loop(metaclass=Reopenable): pass
 class AIOSocket(metaclass=Reopenable): pass
 ```
 
-##  
+## Dive into Python asynchronous model
 
-<center><img src="logos.png" style="height: 20em;" /></center>
-
-## Plongée au cœur du modèle asynchrone Python 
-
-* `asyncio` n'est pas le seul moteur asynchrone
-* `async` et `await` ne lui sont pas intrinsèquement liés
-* Comment réécrire `asyncio` ?
-
-* <https://github.com/entwanne/presentation_python_plongee_asynchrone>
+* `asyncio` is not the only async engine
+* `async` and `await` could be used outside of `asyncio`
+* How could `asyncio` be rewritten?

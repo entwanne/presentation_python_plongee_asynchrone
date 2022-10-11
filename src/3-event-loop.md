@@ -1,9 +1,9 @@
-# Boucle d'or et les trois tâches
+# Goldilocks and the three tasks
 
 
-## Boucles événementielles
+## Event loops
 
-* Premier prototype de boucle événementielle
+* First prototype of an event loop
 
 ```python
 def run_task(task):
@@ -17,33 +17,33 @@ def run_task(task):
 ```
 
 
-## Boucles évenementielles
+## Event loops
 
-* Peu d'utilité pour n'exécuter qu'une seule tâche
-* Version améliorée pouvant cadencer plusieurs tâches
-* Utilisation d'une file pour connaître la prochaîne tâche à itérer
+* Not really useful if it executes only one task
+* Better version to schedule multiple tasks
+* Use a queue to know the next task to iterate over
 
 ```python
 def run_tasks(*tasks):
     tasks = [task.__await__() for task in tasks]
 
     while tasks:
-        # On prend la première tâche disponible
+        # We take the first available task
         task = tasks.pop(0)
         try:
             next(task)
         except StopIteration:
-            # La tâche est terminée
+            # Task is over
             pass
         else:
-            # La tâche continue, on la remet en queue de liste
+            # Task is not finished, we enqueue it to continue it later
             tasks.append(task)
 ```
 
 
-## Boucles évenementielles - exécution
+## Event loops - execution
 
-* Quelques exemples d'exécution concurrente
+* Some examples of concurrent execution
 
 ```python
 run_tasks(simple_print(1), ComplexWork(), simple_print(2), simple_print(3))
@@ -55,9 +55,9 @@ run_tasks(wait_job(waiter), count_up_to(waiter, 5))
 ```
 
 
-## Environnement asynchrone
+## Asynchronous environment
 
-* Tâche unitaire simple pour rendre la main à la boucle
+* Unit task to give control back to the event loop
 
 ```python
 class interrupt:
@@ -67,7 +67,7 @@ class interrupt:
 
 --------------------
 
-* Qui nous permet de développer d'autres utilitaires
+* That let us write some helpers
 
 ```python
 import time
@@ -81,9 +81,9 @@ async def sleep(duration):
 ```
 
 
-## Environnement asynchrone - exemple
+## Asynchronous environment - example
 
-* Et d'en profiter dans notre environnement
+* And use them in our envirionment
 
 ```python
 async def print_messages(*messages, sleep_time=1):
@@ -98,10 +98,10 @@ run_tasks(print_messages('foo', 'bar', 'baz'),
 ```
 
 
-## Boucles événementielles - interactions
+## Event loops - interactions
 
-* Une boucle événementielle est plus utile si nous pouvons interagir avec elle une fois lancée
-* Prototype d'une nouvelle boucle pouvant programmer des tâches à la volée (`add_task`)
+* An event loop is more useful if we can interact with it once run
+* Prototype of a new loop that can schedule new tasks on the fly (`add_task`)
 
 ```python
 class Loop:
@@ -125,9 +125,9 @@ class Loop:
 ```
 
 
-## Boucles événementielles - interactions
+## Event loops - interactions
 
-* Ajout d'une méthode pour faciliter le lancement
+* New method to easily run a task
 
 ```python
 class Loop:
@@ -144,9 +144,9 @@ loop.run_task(print_messages('foo', 'bar', 'baz'))
 ```
 
 
-## Boucles événementielles - interactions
+## Event loops - interactions
 
-* Ajout de `Loop.current` pour rendre la boucle accessible depuis nos tâches
+* Adding `Loop.current` classvar to make the loop reachable from tasks
 
 ```python
 class Loop:
@@ -167,11 +167,11 @@ class Loop:
 ```
 
 
-## Boucles événementielles - utilitaires
+## Event loops - utility functions
 
-* Implémentation de `gather`, utilitaire permettant d'attendre simultanément plusieurs tâches
+* `gather` implementation to wait for multiple tasks simultaneously
 
-* Amélioration de notre classe `Waiter` pour attendre plusieurs validations
+* Better `Waiter` class to wait for multiple checks
 
 ```python
 class Waiter:
@@ -187,9 +187,9 @@ class Waiter:
 ```
 
 
-## Boucles événementielles - utilitaires
+## Event loops - utility functions
 
-* Utilisée par `gather` pour attendre `N` tâches
+* Used by `gather` to wait for `N` tasks
 
 ```python
 async def gather(*tasks):
@@ -211,14 +211,14 @@ loop.run_task(gather(print_messages('foo', 'bar', 'baz'),
 ```
 
 
-## Boucles événementielles - utilitaires réseau
+## Event loops - network utils
 
-* Autre utilitaire : gestion de _sockets_ asynchrones
-* Utilisation de `select` pour savoir quand la _socket_ est disponible
-* Renvoi à la boucle événementielle le cas échéant
+* Other functions: handling async sockets
+* Use `select` to know when the socket is available
+* Go back to the event loop when unavailable
 
 
-## Boucles événementielles - utilitaires réseau
+## Event loops - network utils
 
 ```python
 import select
@@ -245,7 +245,7 @@ class AIOSocket:
 ```
 
 
-## Boucles événementielles - utilitaires réseau
+## Event loops - network utils
 
 ```python
 class AIOSocket:
@@ -268,7 +268,7 @@ class AIOSocket:
 ```
 
 
-## Boucles événementielles - utilitaires réseau
+## Event loops - network utils
 
 ```python
 class AIOSocket:
@@ -292,7 +292,7 @@ class AIOSocket:
 ```
 
 
-## Boucles événementielles - utilitaires réseau
+## Event loops - network utils
 
 ```python
 import socket
@@ -302,7 +302,7 @@ def aiosocket(family=socket.AF_INET, type=socket.SOCK_STREAM, proto=0, fileno=No
 ```
 
 
-## Boucles événementielles - utilitaires réseau
+## Event loops - network utils
 
 ```python
 async def server_coro():

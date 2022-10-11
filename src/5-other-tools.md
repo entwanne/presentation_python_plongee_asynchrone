@@ -1,26 +1,26 @@
-# Et pour quelques outils de plus
+# For a Few Tools More
 
-## Autres outils
+## Other tools
 
-* Nouveaux outils pour profiter de l'environnement asynchrone
-* Nouveaux blocs : `for` et `with` asynchrones (`async for`, `async with`)
+* Other tools to gain from async environment
+* Other blocks: `async for` and `async with`
 
-## Itérables et générateurs asynchrones
+## Async iterables & generators
 
-* Un itérable asynchrone possède une méthode `__aiter__` renvoyant un itérateur asynchrone
-
---------------------
-
-* L'itérateur asynchrone a une méthode-coroutine `__anext__` renvoyant le prochain élément
+* An async iterable has an `__aiter__` method that returns an async iterator
 
 --------------------
 
-* La méthode lève une exception `StopAsyncIteration` en fin d'itération
+* The async iterator has an `__anext__` coroutine-method that returns the next element at each call
+
+--------------------
+
+* The method raises a `StopAsyncIteration` exception at the end of iteration
 
 
-## Itérables asynchrones
+## Async iterables
 
-* Exemple : équivalent asychrone à `range`
+* Example: async-equivalent to `range`
 
 ```python
 class ARange:
@@ -46,9 +46,9 @@ class ARangeIterator:
 ```
 
 
-## Itérables asynchrones
+## Async iterables
 
-* Exécution au sein de notre moteur asynchrone
+* Run inside our async engine
 
 ```python
 async def test_for():
@@ -60,9 +60,9 @@ loop.run_task(test_for())
 ```
 
 
-## Générateurs asynchrones
+## Async generators
 
-* On peut de façon similaire définir un générateur asynchrone (Python 3.6)
+* In the same way we can define an async generator (Python 3.6)
 
 ```python
 async def arange(stop):
@@ -72,9 +72,9 @@ async def arange(stop):
 ```
 
 
-## Gestionnaires de contexte asynchrones
+## Async context managers
 
-* Contexte asynchrone défini par ses méthodes `__aenter__` et `__aexit__`
+* Async context manager defined by its methods `__aenter__` and `__aexit__`
 
 ```python
 class Server:
@@ -92,9 +92,9 @@ class Server:
 ```
 
 
-## Gestionnaires de contexte asynchrones
+## Async context managers
 
-* Exécution au sein de notre moteur asynchrone
+* Run inside our async engine
 
 ```python
 async def test_with():
@@ -109,9 +109,9 @@ loop.run_task(gather(test_with(), client_coro()))
 ```
 
 
-## Gestionnaires de contexte asynchrones
+## Async context managers
 
-* Contextes asynchrones intégrés à la `contextlib` (Python 3.7)
+* Async context managers embedded in `contextlib` module (Python 3.7)
 
 ```python
 from contextlib import asynccontextmanager

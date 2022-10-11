@@ -3,14 +3,14 @@
 
 ## Futures
 
-* L'implémentation précédente de `sleep` est inefficace
-* La tâche est sans cesse reprogrammée pour rien
-* De même pour la tâche `Waiter` qui n'a besoin d'être lancée qu'une fois sa condition validée
+* The previous implementation of `sleep` function is unefficient
+* The task is continously rescheduled for nothing
+* Same for the `Waiter` task that could be run only when its condition is true
 
 
 ## Futures - asyncio
 
-* `asyncio` utilise un mécanisme de _futures_ :
+* `asyncio` uses _futures_ for that:
 
 ```python
 async def test():
@@ -22,12 +22,12 @@ loop.run_task(test())
 
 --------------------
 
-* Le `yield` utilisé pour rendre la main à la boucle peut être accompagné d'une valeur
+* `yield` keyword used to give control to the loop could take an argument
 
 
-## Futures - exemple
+## Futures - example
 
-* Cette _future_ ne doit être relancée qu'une fois sa condition validée
+* This _future_ should only be rescheduled once its condition is validated
 
 ```python
 class Future:
@@ -37,9 +37,9 @@ class Future:
 ```
 
 
-## Futures - exemple
+## Futures - example
 
-* On ajoute une méthode de validation qui reprogramme la tâche
+* We add a validation method to reschedule the task
 
 ```python
 class Future:
@@ -58,9 +58,9 @@ class Future:
 ```
 
 
-## Futures - boucle événementielle
+## Futures - event loop
 
-* Détection des _futures_ par la boucle événementielle
+* The event loop detects _futures_ objects
 
 ```python
 class Loop:
@@ -82,10 +82,10 @@ class Loop:
 ```
 
 
-## Futures - événements temporels
+## Futures - time events
 
-* L'idée est d'associer une _future_ à un temps
-* On intègre pour cela une gestion d'événéments temporels
+* We want to link a _future_ with a clock time
+* For that we add an handler for time events
 
 ```python
 from functools import total_ordering
@@ -104,9 +104,9 @@ class TimeEvent:
 ```
 
 
-## Futures - événements temporels
+## Futures - time events
 
-* Ajout d'une méthode `call_later`
+* We add a `call_later` method to the loop class
 
 ```python
 import heapq
@@ -121,9 +121,9 @@ class Loop:
 ```
 
 
-## Futures - événements temporels
+## Futures - time events
 
-* Prise en compte des événements temporels par la boucle
+* And we handle time events in the event loop
 
 ```python
 class Loop:
@@ -151,9 +151,9 @@ class Loop:
 ```
 
 
-## Futures - utilitaires
+## Futures - utils
 
-* Ce qui nous permet une meilleure version de `sleep`
+* Now we can write a better version for `sleep` function
 
 ```python
 import time

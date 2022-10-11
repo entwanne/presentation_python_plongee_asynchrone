@@ -1,9 +1,9 @@
-# Un monde de coroutines
+# A world of coroutines
 
 
 ## Coroutines
 
-* Définition d'une coroutine depuis Python 3.5 :
+* Definition of a coroutine since Python 3.5 :
 
 ```python
 async def simple_print(msg):
@@ -12,7 +12,7 @@ async def simple_print(msg):
 
 --------------------
 
-* `simple_print` est une fonction renvoyant une coroutine
+* `simple_print` is a function that returns a coroutine
 
 ```python
 simple_print
@@ -25,7 +25,7 @@ simple_print('Hello')
 
 ## Coroutines
 
-* Le contenu est exécuté par le moteur asynchrone, ici à l'aide d'`await`
+* The body is executed by the async engine, here with `await` keyword
 
 ```python
 await simple_print('Hello')
@@ -33,13 +33,13 @@ await simple_print('Hello')
 
 --------------------
 
-* En dehors d'un *REPL* asynchrone, il faudrait utiliser `asyncio.run`
+* Outside of an async *REPL* we would use `asyncio.run`
 
 ```python
 asyncio.run(simple_print('Hello'))
 ```
 
-* Ou encore interagir directement avec la boucle événementielle :
+* Or directly interact with the event loop:
 
 ```python
 loop = asyncio.new_event_loop()
@@ -48,17 +48,17 @@ loop.run_until_complete(simple_print('Hello'))
 
 --------------------
 
-* Cette boucle exécute et cadence les différentes tâches
-* Elle permet une utilisation concurrente
+* This loop executes and schedules the different tasks
+* It allows concurrent execution
 
 
 ## Coroutines - introspection
 
-* De quoi est faite une coroutine ?
+* What is a coroutine?
 
 --------------------
 
-* C'est un objet avec une méthode `__await__`
+* It's an object with an `__await__` method
 
 ```python
 coro = simple_print('Hello')
@@ -68,7 +68,7 @@ dir(coro)
 
 ## Coroutines - introspection
 
-* Cette méthode renvoie un itérateur (`coroutine_wrapper`)
+* This method returns an iterator (`coroutine_wrapper`)
 
 ```python
 aw = coro.__await__()
@@ -80,9 +80,9 @@ dir(aw)
 ```
 
 
-## Coroutines - itération
+## Coroutines - iteration
 
-* On peut donc itérer manuellement sur une coroutine
+* We can iterate manually over a coroutine
 
 ```python
 for _ in simple_print('Hello').__await__():
@@ -90,9 +90,9 @@ for _ in simple_print('Hello').__await__():
 ```
 
 
-## Coroutines - itération
+## Coroutines - iteration
 
-* De même avec une coroutine plus complexe
+* Even with a more complex coroutine
 
 ```python
 async def complex_work():
@@ -106,9 +106,9 @@ for _ in complex_work().__await__():
 ```
 
 
-## Coroutines - itération
+## Coroutines - iteration
 
-* Plusieurs itérations sont bien parcourues
+* Our loop runs multiple iterations
 
 ```python
 it = complex_work().__await__()
@@ -121,6 +121,6 @@ next(it)
 
 --------------------
 
-* La boucle reprend le contrôle à chaque interruption
-* Le `await asyncio.sleep(0)` a pour effet de `yield`
-* `await` est équivalent à `yield from`
+* The loop takes control back after each iteration
+* `await asyncio.sleep(0)` is similar to a `yield` in a generator (suspend)
+* `await` is equivalent to `yield from`

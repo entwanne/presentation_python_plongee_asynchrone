@@ -1,14 +1,14 @@
-# Attendez-moi !
+# Wait for me!
 
 
 ## Awaitables
 
-* Les coroutines sont des tâches asynchrones (*awaitables*)
-* Un awaitable est un objet avec une méthode `__await__`
+* Coroutines are asynchronous tasks (*awaitables*)
+* An awaitable is an object with an `__await__` method
 
 --------------------
 
-* Tâche équivalente à la coroutine `complex_work` :
+* Async task equivalent to `complex_work` coroutine:
 
 ```python
 class ComplexWork:
@@ -18,16 +18,16 @@ class ComplexWork:
         print('World')
 ```
 
-* Le `yield` rend la méthode génératrice, qui renvoie donc un itérateur
+* `yield` makes this method a generator-function, that returns then a generator
 
 ```python
 await ComplexWork()
 ```
 
 
-## Awaitables - itération
+## Awaitables - iteration
 
-* Notre tâche respecte le protocole établi
+* Our task fits with the previous protocol
 
 ```python
 it = ComplexWork().__await__()
@@ -41,8 +41,8 @@ next(it)
 
 ## Awaitables
 
-* Les tâches autres que les coroutines sont peu courantes
-* Mais sont utiles pour conserver un état associé à la tâche
+* Tasks other than coroutines are rare
+* But they are useful to save a state linked to this task
 
 ```python
 class Waiter:
@@ -55,9 +55,9 @@ class Waiter:
 ```
 
 
-## Awaitables - synchronisation
+## Awaitables - synchronization
 
-* `Waiter` permet à deux tâches de se synchroniser
+* `Waiter` let you synchronize two tasks
 
 ```python
 waiter = Waiter()
